@@ -1,5 +1,3 @@
-# Oscar Rodriguez
-
 ## Work Experience 
 
 ### AWS 
