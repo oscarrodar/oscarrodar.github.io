@@ -18,3 +18,8 @@ export const NAV = [
   { label: 'Blog', href: '/blog/' },
   { label: 'Resume', href: '/resume/' },
 ] as const;
+
+// Cloudflare Web Analytics (cookie-free). Public token; loaded only in production builds.
+export const ANALYTICS = {
+  cloudflareToken: 'd275d66a790946ce8acb1c4f03e0ddf5',
+};
