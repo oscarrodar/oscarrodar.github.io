@@ -4,8 +4,7 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: replace with your real domain once it's connected.
-const SITE_URL = process.env.SITE_URL ?? 'https://oscarrodar.github.io';
+const SITE_URL = process.env.SITE_URL ?? 'https://oscarrodar.com';
 
 export default defineConfig({
   site: SITE_URL,

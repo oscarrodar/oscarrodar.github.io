@@ -27,5 +27,5 @@ Resume PDF: open `/resume/` and click **Save as PDF** (print styles hide the sit
 ## Deploy
 
 Every push to `master` runs `.github/workflows/deploy.yml` and publishes to GitHub Pages.
-Set **Settings → Pages → Source: GitHub Actions** once. For a custom domain, add it under
-Settings → Pages and set `SITE_URL` (or edit `astro.config.mjs`).
+Live at https://oscarrodar.com (custom domain set in Settings → Pages; DNS on Cloudflare).
+The canonical URL lives in `astro.config.mjs` (`SITE_URL`).
