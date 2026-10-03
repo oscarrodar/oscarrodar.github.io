@@ -1,5 +1,5 @@
 ---
-title: 'Why I built this site'
+title: 'Why I built this site!'
 description: 'A home for my writing, projects, and resume — and a small playground for front-end ideas.'
 pubDate: 2026-10-03
 tags: ['meta']
