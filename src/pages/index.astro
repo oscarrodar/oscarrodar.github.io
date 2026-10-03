@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { SITE, LINKS } from '../data/site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Base>
+  <section class="intro" aria-labelledby="hi">
+    <p class="eyebrow">{SITE.role} · {SITE.location}</p>
+    <h1 id="hi">Hi, I'm {SITE.name}.</h1>
+    <p class="lede">
+      I build fast, accessible, data-rich web experiences with React and TypeScript.
+      I've spent 12+ years shipping products at Microsoft and Amazon, and I care a lot about
+      data visualization and interfaces that work for everyone.
+    </p>
+    <ul class="links">
+      {LINKS.map((l) => <li><a href={l.href} rel="me noopener">{l.label}</a></li>)}
+      <li><a href="/resume/">Resume</a></li>
+    </ul>
+  </section>
+
+  {posts.length > 0 && (
+    <section aria-labelledby="writing">
+      <h2 id="writing">Recent writing</h2>
+      <PostList posts={posts} />
+      <p><a href="/blog/">All posts →</a></p>
+    </section>
+  )}
+</Base>
+
+<style>
+  .eyebrow { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
+  .lede { font-size: 1.2rem; color: var(--text); max-width: 38rem; }
+  .links { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; padding: 0; margin: 1.5rem 0 0; }
+  .links a {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
+</style>

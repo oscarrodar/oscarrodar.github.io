@@ -1,0 +1,44 @@
+{
+  "basics": {
+    "summary": "Senior software engineer with 12+ years of experience building web products at Microsoft and Amazon. I specialize in React and TypeScript front ends, data visualization, and WCAG-compliant, accessible UI."
+  },
+  "work": [
+    {
+      "company": "Microsoft",
+      "position": "Senior Software Engineer",
+      "startDate": "TODO",
+      "endDate": null,
+      "summary": "Front-end engineering for Bing Finance and Microsoft 365 Copilot experiences.",
+      "highlights": [
+        "TODO: e.g. a reusable component you built and where it's used.",
+        "TODO: e.g. a feature you led end to end.",
+        "TODO: add a measurable outcome (performance, adoption, accessibility)."
+      ]
+    },
+    {
+      "company": "Amazon",
+      "position": "TODO: title",
+      "startDate": "TODO",
+      "endDate": "TODO",
+      "summary": "TODO: one line on the team and scope.",
+      "highlights": ["TODO: key accomplishment."]
+    }
+  ],
+  "education": [
+    {
+      "institution": "TODO",
+      "studyType": "TODO",
+      "area": "TODO",
+      "endDate": "TODO"
+    }
+  ],
+  "skills": [
+    { "name": "Front end", "keywords": ["React", "TypeScript", "JavaScript", "HTML", "CSS"] },
+    { "name": "Data", "keywords": ["Data visualization", "Kusto (KQL)", "ClickHouse"] },
+    { "name": "Quality", "keywords": ["WCAG accessibility", "Testing", "Performance"] }
+  ],
+  "languages": [
+    { "language": "Spanish", "fluency": "Native" },
+    { "language": "English", "fluency": "Professional" }
+  ]
+}

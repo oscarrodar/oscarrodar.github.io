@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import resume from '../data/resume.json';
+import { SITE, LINKS } from '../data/site';
+
+const range = (start: string, end: string | null) => `${start} – ${end ?? 'Present'}`;
+---
+
+<Base title="Resume" description={`Resume of ${SITE.name}, ${SITE.role}.`}>
+  <div class="resume">
+    <header>
+      <h1>{SITE.name}</h1>
+      <p class="muted">{SITE.role} · {SITE.location}</p>
+      <ul class="contact">
+        {SITE.email && <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>}
+        {LINKS.map((l) => <li><a href={l.href}>{l.href.replace(/^https?:\/\/(www\.)?/, '')}</a></li>)}
+      </ul>
+      <button class="print no-print" type="button" onclick="window.print()">Save as PDF</button>
+    </header>
+
+    <section aria-labelledby="summary">
+      <h2 id="summary">Summary</h2>
+      <p>{resume.basics.summary}</p>
+    </section>
+
+    <section aria-labelledby="experience">
+      <h2 id="experience">Experience</h2>
+      {resume.work.map((job) => (
+        <div class="entry">
+          <div class="entry-head">
+            <h3>{job.position} · {job.company}</h3>
+            <span class="muted">{range(job.startDate, job.endDate)}</span>
+          </div>
+          <p>{job.summary}</p>
+          <ul>{job.highlights.map((h) => <li>{h}</li>)}</ul>
+        </div>
+      ))}
+    </section>
+
+    <section aria-labelledby="skills">
+      <h2 id="skills">Skills</h2>
+      <dl class="skills">
+        {resume.skills.map((s) => (
+          <>
+            <dt>{s.name}</dt>
+            <dd>{s.keywords.join(' · ')}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+
+    <section aria-labelledby="education">
+      <h2 id="education">Education</h2>
+      {resume.education.map((e) => (
+        <div class="entry-head">
+          <span>{e.studyType}, {e.area} · {e.institution}</span>
+          <span class="muted">{e.endDate}</span>
+        </div>
+      ))}
+    </section>
+
+    <section aria-labelledby="languages">
+      <h2 id="languages">Languages</h2>
+      <p>{resume.languages.map((l) => `${l.language} (${l.fluency})`).join(' · ')}</p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .contact { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; padding: 0; margin: 0.25rem 0 1rem; }
+  .entry { margin-bottom: 1.75rem; }
+  .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 1rem; }
+  .entry-head h3 { margin: 0; }
+  .entry p { margin: 0.25rem 0; }
+  .entry ul { margin: 0.25rem 0 0; padding-left: 1.25rem; }
+  .skills { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.25rem; margin: 0; }
+  .skills dt { font-weight: 600; }
+  .skills dd { margin: 0; }
+  @media (max-width: 30rem) { .skills { grid-template-columns: 1fr; } .skills dd { margin-bottom: 0.5rem; } }
+  .print {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    cursor: pointer;
+  }
+
+  @media print {
+    :global(.site-header), :global(.site-footer), :global(.skip-link), .no-print { display: none !important; }
+    :global(body) { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.4; }
+    :global(main.container) { max-width: none; padding: 0; }
+    :global(a) { color: #000; text-decoration: none; }
+    h1 { font-size: 20pt; }
+    h2 { font-size: 12pt; margin: 14pt 0 4pt; border-bottom: 1px solid #999; padding-bottom: 2pt; }
+    h3 { font-size: 10.5pt; }
+    .entry { break-inside: avoid; margin-bottom: 10pt; }
+  }
+  @page { margin: 0.6in; }
+</style>

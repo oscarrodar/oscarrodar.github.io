@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import { SITE, NAV, LINKS } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE.description } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE.name}` : SITE.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — Blog`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container bar">
+        <a class="brand" href="/">{SITE.name}</a>
+        <nav aria-label="Main">
+          <ul>
+            {NAV.map((item) => {
+              const active = item.href === '/' ? path === '/' : path.startsWith(item.href);
+              return (
+                <li>
+                  <a href={item.href} aria-current={active ? 'page' : undefined}>{item.label}</a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container bar">
+        <span class="muted">© {new Date().getFullYear()} {SITE.name}</span>
+        <ul aria-label="Elsewhere">
+          {LINKS.map((l) => (
+            <li><a href={l.href} rel="me noopener">{l.label}</a></li>
+          ))}
+          <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header, .site-footer { border-color: var(--border); }
+  .site-header { border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+  .site-footer { border-top: 1px solid var(--border); margin-top: 5rem; font-size: 0.9rem; }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.25rem;
+  }
+  .brand {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+  ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 0; padding: 0; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover, nav a[aria-current='page'] { color: var(--text); text-decoration: underline; }
+</style>

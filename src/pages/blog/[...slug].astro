@@ -1,0 +1,46 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, pubDate, updatedDate, tags } = post.data;
+---
+
+<Base title={title} description={description}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p class="meta muted">
+        <FormattedDate date={pubDate} />
+        {updatedDate && <> · Updated <FormattedDate date={updatedDate} /></>}
+        {tags.length > 0 && <> · {tags.join(', ')}</>}
+      </p>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+  <p><a href="/blog/">← All posts</a></p>
+</Base>
+
+<style>
+  .meta { font-size: 0.9rem; margin-top: 0; }
+  .prose { margin-top: 2rem; }
+  .prose :global(blockquote) {
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+    color: var(--muted);
+  }
+</style>
