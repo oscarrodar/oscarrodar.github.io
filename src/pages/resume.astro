@@ -4,99 +4,138 @@ import resume from '../data/resume.json';
 import { SITE, LINKS } from '../data/site';
 
 const range = (start: string, end: string | null) => `${start} – ${end ?? 'Present'}`;
+const firstYear = (d: string) => d.match(/\d{4}/)?.[0] ?? '';
+const companySpan = (roles: { startDate: string; endDate: string | null }[]) => {
+  const start = roles.map((r) => firstYear(r.startDate)).sort()[0];
+  const end = roles.some((r) => !r.endDate) ? 'Present' : roles.map((r) => firstYear(r.endDate!)).sort().at(-1);
+  return start === end ? start : `${start} – ${end}`;
+};
 ---
 
-<Base title="Resume" description={`Resume of ${SITE.name}, ${SITE.role}.`}>
-  <div class="resume">
-    <header>
-      <h1>{SITE.name}</h1>
-      <p class="muted">{SITE.role} · {SITE.location}</p>
-      <ul class="contact">
-        {SITE.email && <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>}
-        {LINKS.map((l) => <li><a href={l.href}>{l.href.replace(/^https?:\/\/(www\.)?/, '')}</a></li>)}
+<Base title="Resume" description={`Resume of ${SITE.name}: ${resume.basics.headline}.`}>
+  <article class="resume">
+    <header class="top">
+      <div>
+        <h1>{SITE.name}</h1>
+        <p class="headline">{resume.basics.headline}</p>
+        <p class="muted">{SITE.location}</p>
+      </div>
+      <ul class="contact" aria-label="Profiles">
+        {LINKS.map((l) => (
+          <li><a href={l.href} rel="me noopener">{l.label}<span class="url" aria-hidden="true"> {l.href.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</span></a></li>
+        ))}
       </ul>
-      <button class="print no-print" type="button" onclick="window.print()">Save as PDF</button>
     </header>
 
-    <section aria-labelledby="summary">
-      <h2 id="summary">Summary</h2>
-      <p>{resume.basics.summary}</p>
-    </section>
+    <p class="summary">{resume.basics.summary}</p>
 
     <section aria-labelledby="experience">
       <h2 id="experience">Experience</h2>
-      {resume.work.map((job) => (
-        <div class="entry">
-          <div class="entry-head">
-            <h3>{job.position} · {job.company}</h3>
-            <span class="muted">{range(job.startDate, job.endDate)}</span>
-          </div>
-          <p>{job.summary}</p>
-          <ul>{job.highlights.map((h) => <li>{h}</li>)}</ul>
-        </div>
-      ))}
-    </section>
-
-    <section aria-labelledby="skills">
-      <h2 id="skills">Skills</h2>
-      <dl class="skills">
-        {resume.skills.map((s) => (
-          <>
-            <dt>{s.name}</dt>
-            <dd>{s.keywords.join(' · ')}</dd>
-          </>
+      <ol class="timeline">
+        {resume.work.map((job) => (
+          <li class="company">
+            <div class="company-head">
+              <h3>{job.company}{job.team && <span class="team"> · {job.team}</span>}</h3>
+              <span class="muted dates">{companySpan(job.roles)}</span>
+            </div>
+            {job.roles.map((role) => (
+              <div class="role">
+                <div class="role-head">
+                  <h4>{role.position}</h4>
+                  <span class="muted dates">{range(role.startDate, role.endDate)} · {role.location}</span>
+                </div>
+                <ul>{role.highlights.map((h) => <li>{h}</li>)}</ul>
+              </div>
+            ))}
+          </li>
         ))}
-      </dl>
+      </ol>
     </section>
 
-    <section aria-labelledby="education">
-      <h2 id="education">Education</h2>
-      {resume.education.map((e) => (
-        <div class="entry-head">
-          <span>{e.studyType}, {e.area} · {e.institution}</span>
-          <span class="muted">{e.endDate}</span>
-        </div>
-      ))}
-    </section>
+    <div class="grid">
+      <section aria-labelledby="skills">
+        <h2 id="skills">Skills</h2>
+        {resume.skills.map((s) => (
+          <div class="skill-group">
+            <h3 class="label">{s.name}</h3>
+            <ul class="chips">{s.keywords.map((k) => <li>{k}</li>)}</ul>
+          </div>
+        ))}
+      </section>
 
-    <section aria-labelledby="languages">
-      <h2 id="languages">Languages</h2>
-      <p>{resume.languages.map((l) => `${l.language} (${l.fluency})`).join(' · ')}</p>
-    </section>
-  </div>
+      <div>
+        <section aria-labelledby="education">
+          <h2 id="education">Education</h2>
+          <ul class="plain">
+            {resume.education.map((e) => (
+              <li><strong>{e.degree}</strong><br /><span class="muted">{e.institution}</span></li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="languages">
+          <h2 id="languages">Languages</h2>
+          <ul class="plain">
+            {resume.languages.map((l) => <li>{l.language} <span class="muted">· {l.fluency}</span></li>)}
+          </ul>
+        </section>
+
+        <section aria-labelledby="certs">
+          <h2 id="certs">Certifications &amp; awards</h2>
+          <ul class="plain">{resume.certifications.map((c) => <li>{c}</li>)}</ul>
+        </section>
+      </div>
+    </div>
+  </article>
 </Base>
 
 <style>
-  .contact { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; padding: 0; margin: 0.25rem 0 1rem; }
-  .entry { margin-bottom: 1.75rem; }
-  .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 1rem; }
-  .entry-head h3 { margin: 0; }
-  .entry p { margin: 0.25rem 0; }
-  .entry ul { margin: 0.25rem 0 0; padding-left: 1.25rem; }
-  .skills { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.25rem; margin: 0; }
-  .skills dt { font-weight: 600; }
-  .skills dd { margin: 0; }
-  @media (max-width: 30rem) { .skills { grid-template-columns: 1fr; } .skills dd { margin-bottom: 0.5rem; } }
-  .print {
-    font: inherit;
-    font-size: 0.9rem;
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-    border: 1px solid var(--accent);
-    background: var(--accent);
-    color: var(--accent-contrast);
-    cursor: pointer;
+  .resume { --rule: var(--border); }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem 2rem; }
+  .top h1 { margin-bottom: 0.25rem; }
+  .headline { font-size: 1.15rem; margin: 0; }
+  .top .muted { margin: 0.15rem 0 0; }
+  .contact { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
+  .contact .url { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .summary { font-size: 1.1rem; margin: 2rem 0 0; padding: 1rem 1.25rem; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 8px 8px 0; }
+
+  h2 { font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--font-sans); color: var(--muted); margin-top: 3rem; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .company { position: relative; padding: 0 0 2rem 1.5rem; border-left: 2px solid var(--rule); }
+  .company:last-child { padding-bottom: 0; }
+  .company::before {
+    content: ''; position: absolute; left: -7px; top: 0.45rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent);
   }
+  .company-head, .role-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 1rem; }
+  .company-head h3 { margin: 0; font-size: 1.25rem; }
+  .team { font-weight: 400; color: var(--muted); }
+  .role { margin-top: 0.75rem; }
+  .role-head h4 { margin: 0; font-size: 1rem; font-weight: 600; }
+  .dates { font-size: 0.9rem; }
+  .role ul { margin: 0.35rem 0 0; padding-left: 1.15rem; }
+  .role li { margin-bottom: 0.2rem; }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 0 3rem; }
+  @media (min-width: 44rem) { .grid { grid-template-columns: 1.2fr 1fr; } }
+  .label { font-family: var(--font-sans); font-size: 0.95rem; margin: 1rem 0 0.4rem; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
+  .chips li { font-size: 0.875rem; padding: 0.2rem 0.65rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+  .plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
 
   @media print {
-    :global(.site-header), :global(.site-footer), :global(.skip-link), .no-print { display: none !important; }
-    :global(body) { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.4; }
+    :global(.site-header), :global(.site-footer), :global(.skip-link) { display: none !important; }
+    :global(body) { background: #fff; color: #000; font-size: 10pt; line-height: 1.35; }
     :global(main.container) { max-width: none; padding: 0; }
     :global(a) { color: #000; text-decoration: none; }
-    h1 { font-size: 20pt; }
-    h2 { font-size: 12pt; margin: 14pt 0 4pt; border-bottom: 1px solid #999; padding-bottom: 2pt; }
-    h3 { font-size: 10.5pt; }
-    .entry { break-inside: avoid; margin-bottom: 10pt; }
+    .contact .url { position: static; width: auto; height: auto; clip-path: none; }
+    .summary { background: none; padding: 0 0 0 8pt; }
+    h2 { margin-top: 14pt; font-size: 11pt; }
+    .company { break-inside: avoid; padding-bottom: 10pt; }
+    .chips li { border: none; padding: 0; background: none; }
+    .chips li:not(:last-child)::after { content: ' ·'; }
   }
-  @page { margin: 0.6in; }
+  @page { margin: 0.55in; }
 </style>

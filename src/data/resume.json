@@ -1,44 +1,152 @@
 {
   "basics": {
-    "summary": "Senior software engineer with 12+ years of experience building web products at Microsoft and Amazon. I specialize in React and TypeScript front ends, data visualization, and WCAG-compliant, accessible UI."
+    "headline": "Senior Software Engineer · Microsoft AI",
+    "summary": "Software engineer with 14+ years of experience building scalable, reliable products for Microsoft, Amazon, and Intel. Today I lead Finance and Sports experiences across Bing, Copilot, and MSN in the Microsoft AI organization, with a focus on accessible, data-rich front ends backed by distributed services."
   },
   "work": [
     {
       "company": "Microsoft",
-      "position": "Senior Software Engineer",
-      "startDate": "TODO",
-      "endDate": null,
-      "summary": "Front-end engineering for Bing Finance and Microsoft 365 Copilot experiences.",
-      "highlights": [
-        "TODO: e.g. a reusable component you built and where it's used.",
-        "TODO: e.g. a feature you led end to end.",
-        "TODO: add a measurable outcome (performance, adoption, accessibility)."
+      "team": "Microsoft AI",
+      "roles": [
+        {
+          "position": "Senior Software Engineer",
+          "startDate": "Feb 2025",
+          "endDate": null,
+          "location": "Vancouver, BC",
+          "highlights": [
+            "Lead and deliver Finance and Sports user experiences across Bing, Copilot, and MSN.",
+            "Design and implement distributed software experiences that help advance Copilot.",
+            "Build accessible, data-rich React and TypeScript interfaces."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Amazon Web Services",
+      "team": "AWS Marketplace",
+      "roles": [
+        {
+          "position": "Software Development Engineer II",
+          "startDate": "Mar 2023",
+          "endDate": "Feb 2025",
+          "location": "Vancouver, BC",
+          "highlights": [
+            "Drove architecture and design of large-scale, multi-tier distributed applications, tools, and services for AWS Marketplace.",
+            "Applied object-oriented design and distributed-systems patterns to build reliable, scalable services."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Microsoft",
+      "team": "Microsoft Edge",
+      "roles": [
+        {
+          "position": "Software Engineer II",
+          "startDate": "Dec 2020",
+          "endDate": "Mar 2023",
+          "location": "Alajuela, Costa Rica",
+          "highlights": [
+            "Built new address bar (omnibox) features and enhancements for Microsoft Edge on Chromium.",
+            "Helped ship Edge at Work, bringing Microsoft Search results into the browser address bar.",
+            "Prototyped new browser features as extensions to test and demonstrate feasibility.",
+            "Built monitors and dashboards to track feature impressions, engagement, and live-site health."
+          ]
+        }
       ]
     },
     {
       "company": "Amazon",
-      "position": "TODO: title",
-      "startDate": "TODO",
-      "endDate": "TODO",
-      "summary": "TODO: one line on the team and scope.",
-      "highlights": ["TODO: key accomplishment."]
+      "team": "Seller & Partner Support",
+      "roles": [
+        {
+          "position": "Software Development Engineer II",
+          "startDate": "Jan 2019",
+          "endDate": "Dec 2020",
+          "location": "Costa Rica",
+          "highlights": [
+            "Helped drive the global expansion of Seller and Partner Support applications and services.",
+            "Built a scalable framework to improve the Seller Experience and Amazon Workforce Management, integrating services from teams across Amazon."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Intel Corporation",
+      "team": null,
+      "roles": [
+        {
+          "position": "Full Stack Developer",
+          "startDate": "Jan 2018",
+          "endDate": "Dec 2018",
+          "location": "Costa Rica",
+          "highlights": [
+            "Owned CI/CD for Angular apps and .NET Web APIs using GitHub, TeamCity, and SonarQube.",
+            "Served as lead developer on the Workforce Management agile team, keeping projects aligned with business goals.",
+            "Practiced test-driven development across Angular (Karma, Jasmine) and .NET, driving code coverage toward 90%."
+          ]
+        },
+        {
+          "position": "IT Systems Administrator",
+          "startDate": "Jan 2017",
+          "endDate": "Dec 2018",
+          "location": "Costa Rica",
+          "highlights": [
+            "Built and maintained a Windows Server application platform secured with SSL, Kerberos, and Windows authentication.",
+            "Automated delivery across roughly seven environments, from dev to production, with Git, TeamCity, and PowerShell."
+          ]
+        },
+        {
+          "position": "Developer Lead, Multiplatform Community of Practice",
+          "startDate": "2016",
+          "endDate": "Dec 2018",
+          "location": "Costa Rica",
+          "highlights": [
+            "Trained developers on Node.js, JavaScript, TypeScript, Angular, Sails.js, and Git, and set standards for new engineers."
+          ]
+        },
+        {
+          "position": "Application Developer",
+          "startDate": "Aug 2013",
+          "endDate": "Dec 2018",
+          "location": "Costa Rica",
+          "highlights": ["Developed and maintained HR applications."]
+        }
+      ]
+    },
+    {
+      "company": "Universidad Nacional, Legal Office",
+      "team": null,
+      "roles": [
+        {
+          "position": "PHP Developer (Intern)",
+          "startDate": "Jun 2012",
+          "endDate": "Dec 2012",
+          "location": "Costa Rica",
+          "highlights": ["Built a system to register and track legal cases involving the university."]
+        }
+      ]
     }
   ],
   "education": [
-    {
-      "institution": "TODO",
-      "studyType": "TODO",
-      "area": "TODO",
-      "endDate": "TODO"
-    }
+    { "institution": "Tecnológico de Costa Rica", "degree": "Master's (Maestría), Computer Science" },
+    { "institution": "Universidad Nacional", "degree": "Licenciatura, Web Development" },
+    { "institution": "Universidad Nacional", "degree": "Bachelor's (Bachillerato), Systems Engineering" }
   ],
   "skills": [
-    { "name": "Front end", "keywords": ["React", "TypeScript", "JavaScript", "HTML", "CSS"] },
-    { "name": "Data", "keywords": ["Data visualization", "Kusto (KQL)", "ClickHouse"] },
-    { "name": "Quality", "keywords": ["WCAG accessibility", "Testing", "Performance"] }
+    { "name": "Front end", "keywords": ["React", "TypeScript", "JavaScript", "Angular", "Data visualization", "WCAG accessibility"] },
+    { "name": "Back end & cloud", "keywords": ["Distributed systems", "Microsoft Azure", "AWS", ".NET", "Node.js"] },
+    { "name": "Engineering", "keywords": ["Technical leadership", "Solution design", "CI/CD", "Test-driven development", "Observability"] }
+  ],
+  "certifications": [
+    "Microsoft Global Hackathon 2025",
+    "Microsoft Global Hackathon 2022",
+    "Accessibility in Action",
+    "GitHub para programadores",
+    "How to Fix Bad Agile"
   ],
   "languages": [
     { "language": "Spanish", "fluency": "Native" },
-    { "language": "English", "fluency": "Professional" }
+    { "language": "English", "fluency": "Full professional" }
   ]
 }
