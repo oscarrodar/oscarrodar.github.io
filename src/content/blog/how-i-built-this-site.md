@@ -96,7 +96,7 @@ of reading build logs.
 
 ## What's next
 
-- A **projects** page, starting with a World Cup predictions app I built.
+- A **projects** page to showcase things I build.
 - Posts on front-end architecture, data visualization, and accessibility, which is what I spend my days on.
 - Maybe a Spanish version. Astro has built-in i18n routing, and it would be a shame not to use the other half of my vocabulary.
 
