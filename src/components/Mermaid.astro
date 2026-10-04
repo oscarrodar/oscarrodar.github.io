@@ -1,0 +1,64 @@
+---
+// Renders ```mermaid code blocks as SVG diagrams in the browser.
+// The Mermaid library is only downloaded on pages that contain a diagram,
+// and diagrams re-render when the visitor's light/dark preference changes.
+---
+
+<script>
+  const blocks = Array.from(document.querySelectorAll<HTMLElement>('pre > code.language-mermaid'));
+
+  if (blocks.length > 0) {
+    const containers = blocks.map((code) => {
+      const figure = document.createElement('div');
+      figure.className = 'mermaid-diagram';
+      // Keyboard users can focus and scroll wide diagrams.
+      figure.tabIndex = 0;
+      figure.setAttribute('role', 'group');
+      figure.setAttribute('aria-label', 'Diagram');
+      figure.dataset.source = code.textContent ?? '';
+      code.parentElement!.replaceWith(figure);
+      return figure;
+    });
+
+    const { default: mermaid } = await import('mermaid');
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const render = async () => {
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: dark.matches ? 'dark' : 'neutral',
+        fontFamily: 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+      });
+      for (const el of containers) {
+        el.removeAttribute('data-processed');
+        el.textContent = el.dataset.source ?? '';
+      }
+      await mermaid.run({ nodes: containers });
+    };
+
+    await render();
+    dark.addEventListener('change', render);
+  }
+</script>
+
+<style is:global>
+  .mermaid-diagram {
+    margin: 2rem 0;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-diagram svg {
+    height: auto;
+  }
+  /* Sequence diagrams lose legibility when shrunk; let them scroll on narrow screens. */
+  @media (max-width: 40rem) {
+    .mermaid-diagram svg[aria-roledescription='sequence'] {
+      min-width: 36rem;
+    }
+  }
+</style>

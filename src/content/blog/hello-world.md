@@ -3,6 +3,7 @@ title: 'Why I built this site!'
 description: 'A home for my writing, projects, and resume — and a small playground for front-end ideas.'
 pubDate: 2026-10-03
 tags: ['meta']
+draft: true
 ---
 
 TODO: write a few paragraphs in your own voice. Some prompts to get started:

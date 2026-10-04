@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import Mermaid from '../../components/Mermaid.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -32,6 +33,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
     </div>
   </article>
   <p><a href="/blog/">← All posts</a></p>
+  <Mermaid />
 </Base>
 
 <style>
