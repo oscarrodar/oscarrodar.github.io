@@ -54,22 +54,28 @@ frontmatter, so mistakes stop at the build instead of reaching readers.
 ```mermaid
 sequenceDiagram
   accTitle: Request path for a page view
-  accDescr: The browser resolves oscarrodar.com through Cloudflare DNS, loads static HTML from GitHub Pages over HTTPS, then sends an anonymous page-view beacon to Cloudflare Web Analytics.
+  accDescr: The browser resolves oscarrodar.com to Cloudflare's edge. Cloudflare serves the page from its cache or fetches it from GitHub Pages over HTTPS, returns it to the browser, and the browser sends an anonymous page-view beacon to Cloudflare Web Analytics.
 
   participant B as Browser
-  participant DNS as Cloudflare DNS
+  participant CF as Cloudflare edge
   participant GH as GitHub Pages
-  participant CF as Cloudflare Analytics
+  participant WA as Cloudflare Analytics
 
-  B->>DNS: Where is oscarrodar.com?
-  DNS-->>B: GitHub Pages IPs (A records)
-  B->>GH: GET / over HTTPS
-  GH-->>B: Static HTML + CSS
-  B-)CF: Anonymous page-view beacon (no cookies)
+  B->>CF: GET oscarrodar.com over HTTPS
+  alt Cached at the edge
+    CF-->>B: Static HTML + CSS
+  else Not cached yet
+    CF->>GH: GET / over HTTPS (Full SSL)
+    GH-->>CF: Static HTML + CSS
+    CF-->>B: Static HTML + CSS
+  end
+  B-)WA: Anonymous page-view beacon (no cookies)
 ```
 
-The DNS records are set to **DNS only**, not proxied through Cloudflare, so GitHub can issue and renew the
-HTTPS certificate itself. Analytics run without cookies, so there's no consent banner to click through.
+The DNS records are **proxied** through Cloudflare, so visitors connect to Cloudflare's edge, which serves
+cached pages close to them and forwards everything else to GitHub Pages. The SSL mode is set to **Full**, which
+means the connection is encrypted end to end: browser to Cloudflare, and Cloudflare to GitHub. Analytics run
+without cookies, so there's no consent banner to click through.
 
 ## What broke (and the fixes)
 
