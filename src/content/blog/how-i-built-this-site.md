@@ -1,5 +1,5 @@
 ---
-title: 'How I built this site'
+title: 'How I built this site!'
 description: 'Astro, Markdown, GitHub Actions, GitHub Pages, and a Cloudflare domain: the whole setup in one afternoon, including what broke along the way.'
 pubDate: 2026-10-03T18:00:00Z
 tags: ['astro', 'github-pages', 'meta']
